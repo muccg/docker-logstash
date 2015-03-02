@@ -44,7 +44,7 @@ wait_for_services
 if [ "$1" = 'kibana' ]; then
     echo "[Run] Starting kibana"
 
-    su kibana -s /bin/bash -c '/opt/kibana/bin/kibana'
+    su kibana -s /bin/bash -c '/opt/kibana/bin/kibana -c /opt/kibana/config/kibana.yml'
     exit $?
 fi
 
