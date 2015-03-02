@@ -28,3 +28,5 @@ logstash:
     command: logstash
     links:
       - elasticsearch
+    ports:
+      - "5140:5140"
