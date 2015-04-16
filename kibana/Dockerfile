@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Install Kibana
 RUN cd /opt \
-  && curl -O https://download.elasticsearch.org/kibana/kibana/kibana-4.0.0-linux-x64.tar.gz \
+  && curl -O https://download.elasticsearch.org/kibana/kibana/kibana-4.0.2-linux-x64.tar.gz \
   && tar xzf kibana-*.tar.gz \
   && rm kibana-*.tar.gz \
   && ln -s kibana-* kibana
