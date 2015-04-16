@@ -10,7 +10,7 @@ ENV JAVA_HOME /usr/lib/jvm/java-7-openjdk-amd64
 
 # Install Elasticsearch
 RUN cd /opt \
-  && curl -O https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.4.4.tar.gz \
+  && curl -O https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.5.1.tar.gz \
   && tar xzf elasticsearch-*.tar.gz \
   && rm elasticsearch-*.tar.gz \
   && ln -s elasticsearch-* elasticsearch
