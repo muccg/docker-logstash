@@ -19,6 +19,8 @@ kibana:
 elasticsearch:
     build: elasticsearch/
     command: elasticsearch
+    volumes:
+      - data/elasticsearch:/opt/elasticsearch/data
     ports:
       - ":9200"
       - ":9300"
@@ -26,6 +28,8 @@ elasticsearch:
 logstash:
     build: logstash/
     command: logstash
+    volumes:
+      - data/logstash:/opt/logstash/data
     links:
       - elasticsearch
     ports:
