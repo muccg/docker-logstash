@@ -29,6 +29,8 @@ function wait_for_services {
 function defaults {
     : ${KIBANASERVER="kibana"}
     : ${KIBANAPORT="5601"}
+    : ${KIBANAUSER="admin"}
+    : ${KIBANAHASH="YiVM06bbyumjE"}
 
     export KIBANAPORT KIBANASERVER
 }
@@ -43,6 +45,9 @@ wait_for_services
 # nginx entrypoint
 if [ "$1" = 'nginx' ]; then
     echo "[Run] Starting nginx"
+
+    # htpasswd in place
+    echo "${KIBANAUSER}:${KIBANAHASH}" > /etc/nginx/conf.d/kibana.htpasswd
 
     /usr/sbin/nginx -g "daemon off;"
     exit $?
