@@ -34,3 +34,13 @@ logstash:
       - elasticsearch
     ports:
       - "5140:5140"
+
+nginx:
+    build: nginx/
+    command: nginx
+    environment:
+      - WAIT_FOR_KIBANA=1
+    ports:
+      - "8443:443"
+    links:
+      - kibana
