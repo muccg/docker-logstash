@@ -1,0 +1,7 @@
+proxy:
+    build: .
+    command: nginx
+    environment:
+      - WAIT_FOR_KIBANA=1
+    #ports:
+    #  - "80443:443"
