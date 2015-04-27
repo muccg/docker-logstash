@@ -29,11 +29,15 @@ logstash:
     build: logstash/
     command: logstash
     volumes:
-      - data/logstash:/opt/logstash/data
+      - data/logstash/data:/opt/logstash/data
+      - data/logstash/logs:/opt/logstash/logs
     links:
       - elasticsearch
     ports:
       - "5140:5140"
+      - "5140:5140/udp"
+      - ":514"
+      - ":514/udp"
 
 nginx:
     build: nginx/

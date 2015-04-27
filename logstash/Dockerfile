@@ -33,8 +33,9 @@ RUN chmod +x /docker-entrypoint.sh
 
 COPY logstash.conf /opt/logstash/config/logstash.conf
 
-VOLUME ["/opt/logstash/config", "/opt/logstash/data", "/opt/logstash/logs"]
+VOLUME ["/opt/logstash/data", "/opt/logstash/logs"]
 EXPOSE 514 5140
+EXPOSE 514/udp 5140/udp
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ['logstash']
