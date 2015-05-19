@@ -19,9 +19,6 @@ defaults
 if [ "$1" = 'logstash' ]; then
     echo "[Run] Starting logstash"
 
-    # allow logstash to use privileged port
-    setcap 'cap_net_bind_service=+ep' /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/java
-
     # Logstash logs to stdout even when logfile provided
     # Redirect stdout to /dev/null to prevent recursive ingestion of events via logspout
     su logstash -s /bin/bash -c "/opt/logstash/bin/logstash agent -f /opt/logstash/config/logstash.conf -l ${LOGSTASH_LOGFILE} > /dev/null"
