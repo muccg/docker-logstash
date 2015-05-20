@@ -38,6 +38,8 @@ logstash:
       - "5140:5140/udp"
       - ":514"
       - ":514/udp"
+      - ":5959"
+      - ":5959/udp"
 
 nginx:
     build: nginx/
