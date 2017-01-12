@@ -1,0 +1,58 @@
+version: '2'
+services:
+
+
+  logspout:
+      image: muccg/logspout
+      environment:
+          - ROUTE_URIS=logstash://logstash:5140
+      volumes:
+        - /var/run/docker.sock:/var/run/docker.sock
+      links:
+        - logstash
+      depends_on:
+        - logstash
+
+  kibana:
+      image: kibana:5.1
+      ports:
+        - "5601:5601"
+      links:
+        - elasticsearch
+
+  elasticsearch:
+      image: elasticsearch:5.1-alpine
+      volumes:
+        - ./data/elasticsearch:/usr/share/elasticsearch/data
+      ports:
+        - "9200"
+        - "9300"
+
+  logstash:
+      image: logstash:5.1-alpine
+      command: logstash -f /config-dir/logstash.conf
+      volumes:
+        - ./logstash:/config-dir
+      links:
+        - elasticsearch
+      ports:
+        - "5140:5140"
+        - "5140:5140/udp"
+        - "514"
+        - "514/udp"
+        - "5959"
+        - "5959/udp"
+      depends_on:
+        - elasticsearch 
+
+  nginx:
+      build: nginx/
+      command: nginx
+      environment:
+        - WAIT_FOR_KIBANA=1
+      ports:
+        - "8443:443"
+      links:
+        - kibana
+      depends_on:
+        - kibana
