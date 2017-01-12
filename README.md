@@ -3,9 +3,9 @@ logstash
 
 A largely redundant repo that previously had some rather crufty containers for running logstash ELK stack (elasticsearch, kibana, logstash). The official containers have come along and made this redundant.
 
-image: kibana:5.1
-image: elasticsearch:5.1-alpine
-image: logstash:5.1-alpine
+ - kibana:5.1
+ - elasticsearch:5.1-alpine
+ - logstash:5.1-alpine
 
 
 Remember to set:
