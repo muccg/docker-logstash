@@ -45,6 +45,7 @@ services:
       depends_on:
         - elasticsearch 
 
+  # throw away nginx container for local testing
   nginx:
       build: nginx/
       command: nginx

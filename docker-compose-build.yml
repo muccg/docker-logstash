@@ -1,0 +1,13 @@
+version: '2'
+services:
+
+  devlogspout:
+    build:
+      context: ./logspout/
+    image: muccg/logspout:${GIT_BRANCH}
+
+  latestlogspout:
+    extends:
+      file: docker-compose-build.yml
+      service: devlogspout
+    image: muccg/logspout:latest
