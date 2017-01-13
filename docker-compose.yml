@@ -3,7 +3,7 @@ services:
 
 
   logspout:
-      image: muccg/logspout
+      image: muccg/logspout-logstash
       environment:
           - ROUTE_URIS=logstash://logstash:5140
       volumes:
