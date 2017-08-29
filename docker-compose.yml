@@ -5,7 +5,9 @@ services:
   logspout:
       image: muccg/logspout-logstash
       environment:
-          - ROUTE_URIS=logstash://logstash:5140
+        - WAIT_FOR_LOGSTASH=1
+        - RETRY_STARTUP=1
+        - ROUTE_URIS=logstash+tcp://logstash:5140
       volumes:
         - /var/run/docker.sock:/var/run/docker.sock
       links:
@@ -14,14 +16,24 @@ services:
         - logstash
 
   kibana:
-      image: kibana:5.1
+      image: docker.elastic.co/kibana/kibana:5.5.2
+      volumes:
+        - ./kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
       ports:
         - "5601:5601"
       links:
         - elasticsearch
+      depends_on:
+        - elasticsearch
 
   elasticsearch:
-      image: elasticsearch:5.1-alpine
+      # note: sudo chmod o+w data/elasticsearch
+      image: docker.elastic.co/elasticsearch/elasticsearch:5.5.2
+      environment:
+        - http.host=0.0.0.0
+        - transport.host=127.0.0.1
+        - ES_JAVA_OPTS=-Xms512m -Xmx512m
+      mem_limit: 1g
       volumes:
         - ./data/elasticsearch:/usr/share/elasticsearch/data
       ports:
@@ -29,10 +41,13 @@ services:
         - "9300"
 
   logstash:
-      image: logstash:5.1-alpine
-      command: logstash -f /config-dir/logstash.conf
+      image: docker.elastic.co/logstash/logstash:5.5.2
+      environment:
+        - ES_JAVA_OPTS=-Xms512m -Xmx512m
+      mem_limit: 1g
       volumes:
-        - ./logstash:/config-dir
+        - ./logstash/logstash.yml:/usr/share/logstash/config/logstash.yml
+        - ./logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
       links:
         - elasticsearch
       ports:
@@ -52,7 +67,7 @@ services:
       environment:
         - WAIT_FOR_KIBANA=1
       ports:
-        - "8443:443"
+        - "443"
       links:
         - kibana
       depends_on:

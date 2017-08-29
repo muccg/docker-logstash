@@ -1,5 +1,8 @@
-FROM nginx:1.10
-MAINTAINER https://github.com/muccg/
+FROM nginx:1.13-alpine
+LABEL maintainer "https://github.com/muccg/"
+
+RUN apk --no-cache add \
+    bash
 
 RUN rm -rf /etc/nginx
 COPY nginx /etc/nginx
