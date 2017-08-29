@@ -3,7 +3,7 @@ services:
 
 
   logspout:
-      image: muccg/logspout-logstash
+      image: muccg/logspout-logstash:v3.2.2
       environment:
         - WAIT_FOR_LOGSTASH=1
         - RETRY_STARTUP=1
